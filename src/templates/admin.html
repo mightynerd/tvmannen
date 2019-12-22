@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>User: {{ user.username }}, Role: {{user.role}}</h1>
+
+<h1>PR</h1>
+
+{% for pr in pr_list %}
+  <p> {{ pr.file_name }} </p>
+{% endfor %}
+
+<h1>Upload PR</h1>
+<form method=post enctype=multipart/form-data> <input type=file name=file>
+  <input type=submit value=Upload>
+</form>
+
+{% endblock %}
