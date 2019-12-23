@@ -1,8 +1,33 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FileField
+from wtforms.fields.html5 import DateField
+from wtforms.validators import DataRequired, ValidationError, EqualTo
+from tv import User
 
 class LoginForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
   password = PasswordField('Password', validators=[DataRequired()])
   submit = SubmitField('Sign In')
+
+
+class RegistrationForm(FlaskForm):
+    roles = [('admin', "Admin"), ('pr', "PR")]
+
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    role = SelectField("Role",validators=[DataRequired()], choices=roles)
+    submit = SubmitField('Create user')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Username already taken')
+
+class PRForm(FlaskForm):
+  file = FileField("Image file", validators=[DataRequired()])
+  desc = StringField("Description", validators=[DataRequired()])
+  start_date = DateField("Start date", validators=[DataRequired()])
+  end_date = DateField("End date", validators=[DataRequired()])
+  submit = SubmitField('Upload PR')

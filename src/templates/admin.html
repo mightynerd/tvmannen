@@ -3,15 +3,46 @@
 
 <h1>User: {{ user.username }}, Role: {{user.role}}</h1>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <h2>Messages</h2>
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% endwith %}
+
 <h1>PR</h1>
 
 {% for pr in pr_list %}
-  <p> {{ pr.file_name }} </p>
+  <p> {{ pr.file_name }}, {{ pr.id }}, <a href="/admin/delete?id={{pr.id}}">Delete</a> </p>
 {% endfor %}
 
 <h1>Upload PR</h1>
-<form method=post enctype=multipart/form-data> <input type=file name=file>
-  <input type=submit value=Upload>
+<form method=post>
+  <p>
+    {{ form.file.title }}<br>
+    {{ form.file }}
+  </p>
+  <p>
+    {{ form.desc.title }} <br>
+    {{ form.desc }}
+  </p>
+  <p>
+    {{ form.start_date.label }} <br>
+    {{ form.start_date }} <br>
+    {{ form.end_date.label }} <br>
+    {{ form.end_date}}
+  </p>
+  <p>
+    {{ form.submit }}
+  </p>
 </form>
+
+<a href="/admin/users">Users</a>
+
+<a href="/logout">Logout</a>
 
 {% endblock %}

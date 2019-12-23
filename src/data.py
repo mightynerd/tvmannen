@@ -28,7 +28,7 @@ class PR(db.Model):
 
 def add_pr(file_name, desc, start_date, end_date, user_id):
   pr = PR(desc=desc, file_name=file_name, priority=0,
-          start_date=start_date, end_date=datetime.end_date, user_id=user_id)
+          start_date=start_date, end_date=end_date, user_id=user_id)
   db.session.add(pr)
   db.session.commit()
 
