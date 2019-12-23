@@ -26,8 +26,8 @@ class PR(db.Model):
     priority = db.Column(db.Integer, default=0)
     
 
-def add_pr(file_name, desc, start_date, end_date, user_id):
-  pr = PR(desc=desc, file_name=file_name, priority=0,
+def add_pr(file_name, desc, priority, start_date, end_date, user_id):
+  pr = PR(desc=desc, file_name=file_name, priority=priority,
           start_date=start_date, end_date=end_date, user_id=user_id)
   db.session.add(pr)
   db.session.commit()
