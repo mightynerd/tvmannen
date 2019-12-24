@@ -2,6 +2,7 @@ from flask import Flask, render_template, flash, redirect, request, json
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from datetime import datetime
 
 from config import Config as config
 
@@ -30,16 +31,24 @@ app.register_blueprint(login_page)
 def index():
     return render_template("pr.html")
 
+# Delete old PRs
+def pr_cleanup():
+    PR.query.filter(PR.end_date < datetime.now()).delete()
+    db.session.commit()
 
 @app.route("/pr")
 def pr():
+    pr_cleanup()
+
+    # Check if priority PR exists
     priority = PR.query.filter_by(priority=1).first() 
     if priority != None:
         return json.jsonify(
             ["/static/pr/" + priority.file_name]
         )
 
+    # Return all active PRs
     return json.jsonify(
         [("/static/pr/" + user.file_name) 
-        for user in PR.query.all()]
+            for user in PR.query.filter(PR.start_date < datetime.now()).all()]
         )
