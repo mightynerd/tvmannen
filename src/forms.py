@@ -30,13 +30,13 @@ class PRForm(FlaskForm):
   today = datetime.today()
   tomorrow = today.replace(day=today.day + 1)
 
-  file = FileField("Image file", validators=[DataRequired()])
-  desc = StringField("Description", validators=[DataRequired()])
-  start_date = DateField("Start date (first day the PR will be shown):",
+  file = FileField(label="Image file:", validators=[DataRequired()])
+  desc = StringField("Description:", validators=[DataRequired()])
+  start_date = DateField("Start date:",
                          validators=[DataRequired()], default=today)
-  end_date = DateField("End date (last day the PR will be shown):"
+  end_date = DateField("End date:"
                        , validators=[DataRequired()], default=tomorrow)
-  priority = BooleanField("Priority")
+  priority = BooleanField("Priority:")
   submit = SubmitField('Upload PR')
 
 class ModifyUserForm(FlaskForm):

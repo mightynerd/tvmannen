@@ -27,7 +27,7 @@ def create_user():
         db.session.commit()
         flash('User has been created')
         return redirect("/admin/users")
-    return render_template('users.html', form=form, users=users)
+    return render_template('users.html', form=form, users=users, user=current_user)
 
 # Deletes an user on request for admin accounts
 # Takes user_id "id" as argument

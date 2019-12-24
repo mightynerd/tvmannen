@@ -1,69 +1,105 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>User: {{ user.username }}, Role: {{user.role}}</h1>
-
 {% with messages = get_flashed_messages() %}
   {% if messages %}
-  <h2>Messages</h2>
+  <div class="card small">
   <ul>
     {% for message in messages %}
     <li>{{ message }}</li>
     {% endfor %}
   </ul>
+  </div>
   {% endif %}
 {% endwith %}
 
-<h1>PR</h1>
-
+<fieldset>
+<legend>Your PRs</legend>
+<table>
+<tr>
+  <th>Description</th>
+  <th>Start time</th>
+  <th>End time</th>
+  <th></th>
+</tr>
 {% for pr in pr_list %}
-  <p> 
-    ({{ pr.desc}}), {{ pr.file_name }}, id={{ pr.id }}, 
-    priority={{ pr.priority }}, {{ pr.start_date }} - {{ pr.end_date }},
-    <a href="/admin/delete?id={{pr.id}}">Delete</a> 
-  </p>
+  <tr>
+    <td><a href="/static/pr/{{pr.file_name}}">{{ pr.desc }}</a></td>
+    <td>{{ pr.start_date.strftime('%Y-%m-%d, %H:%m') }}</td>
+    <td>{{ pr.end_date.strftime('%Y-%m-%d, %H:%m') }}</td>
+    <td><a href="/admin/delete?id={{pr.id}}">Delete</a></td>
+  </tr>
 {% endfor %}
+</table>
+</fieldset>
 
-<h1>Upload PR</h1>
+
+<fieldset>
+<legend>Upload PR</legend>
 <form method="post" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
-  <p>
-    {{ form.file.title }}<br>
-    {{ form.file }}
-    {% for error in form.file.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.desc.title }} <br>
-    {{ form.desc }}
-    {% for error in form.desc.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.start_date.label }} <br>
-    {{ form.start_date }} <br>
+
+  <div class="row responsive-label">
+    <div class="col-sm-12 col-md-1">
+      {{ form.file.label }}
+    </div>
+    <div class="col-sm-12 col-md">
+      {{ form.file }}
+      {% for error in form.file.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+  </div>
+    
+
+  <div class="row responsive-label">
+    <div class="col-sm-12 col-md-1">
+      {{ form.desc.label }}
+    </div>
+    <div class="col-sm-12 col-md">
+      {{ form.desc }}
+      {% for error in form.desc.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row responsive-label">
+    <div class="col-sm-12 col-md-1">
+      {{ form.start_date.label }}
+    </div>
+    <div class="col-sm-12 col-md">
+    {{ form.start_date }}
     {% for error in form.start_date.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
-    {{ form.end_date.label }} <br>
-    {{ form.end_date}}
-    {% for error in form.end_date.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.priority.label }} {{ form.priority }} <br>
-    (Only this PR will be shown until 5:00 tomorrow)
-  </p>
-  <p>
+    </div>
+  </div>
+
+  <div class="row responsive-label">
+    <div class="col-sm-12 col-md-1">
+      {{ form.end_date.label }}
+    </div>
+    <div class="col-sm-12 col-md">
+      {{ form.end_date}}
+      {% for error in form.end_date.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row responsive-label">
+    <div class="col-sm-12 col-md-1">
+      {{ form.priority.label }} 
+    </div>
+    <div class="col-sm-12 col-md"></div>
+      {{ form.priority }}
+    </div>
+  </div>
+
+
     {{ form.submit }}
-  </p>
 </form>
-
-<a href="/admin/users">Users</a>
-
-<a href="/logout">Logout</a>
+</fieldset>
 
 {% endblock %}
