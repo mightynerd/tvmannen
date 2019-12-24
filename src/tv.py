@@ -28,7 +28,7 @@ app.register_blueprint(login_page)
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
+    return render_template("pr.html")
 
 
 @app.route("/pr")
@@ -36,10 +36,10 @@ def pr():
     priority = PR.query.filter_by(priority=1).first() 
     if priority != None:
         return json.jsonify(
-            ["/static_files/pr/" + priority.file_name]
+            ["/static/pr/" + priority.file_name]
         )
 
     return json.jsonify(
-        [("/static_files/pr/" + user.file_name) 
+        [("/static/pr/" + user.file_name) 
         for user in PR.query.all()]
         )

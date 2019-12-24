@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DTEK TV</title>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="300">
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-position: center;
+      background-size: contain;
+      background-image: url(https://dtek.se/static/datalogo.svg);
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      font-family: Helvetica, Arial, Sans-Serif;
+      background-color: #fa6607;
+      font-size: 3em;
+      background-repeat: no-repeat;
+    }
+    
+  </style>
+    
+  <script>
+
+    var curr = 0;
+    var prs = undefined;
+
+    function next_pr() {
+      document.getElementById("body").style.backgroundImage = "url(" + prs[curr] + ")";
+      curr++;
+      curr %= prs.length;
+    }
+
+    // Get list of PRs from /pr
+    function get_prs() {
+        var request = new XMLHttpRequest();
+        request.open("GET", "/pr");
+        request.responseType = 'json';
+        request.send();
+
+        request.onload = function () {
+          var prev_prs = prs;
+          prs = request.response;
+
+          // Call next_pr on first load
+          if (prev_pers === undefined)
+            next_pr();
+      }
+    }
+
+
+    setInterval(next_pr, 10000);
+    setInterval(get_prs,  60000)
+
+  </script>
+</head>
+
+<body id="body" onload="get_prs()">
+  <br>
+</body>
+
+</html>

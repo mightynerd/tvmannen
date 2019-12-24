@@ -63,7 +63,11 @@ def delete():
         flash("You don't have permissions to delete this pr")
         return redirect("/admin")
 
-    os.remove(os.path.join(config.UPLOAD_FOLDER, pr.file_name))
+    try:
+        os.remove(os.path.join(config.UPLOAD_FOLDER, pr.file_name))
+    except: 
+        flash("PR wasn't found on disk but the database entry has been removed")
+        
     db.session.delete(pr)
     db.session.commit()
     flash("PR successfully deleted")
