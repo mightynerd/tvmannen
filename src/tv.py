@@ -41,7 +41,7 @@ def pr():
     pr_cleanup()
 
     # Check if priority PR exists
-    priority = PR.query.filter_by(priority=1).first() 
+    priority = PR.query.filter(PR.priority==1, PR.start_date < datetime.now()).first() 
     if priority != None:
         return json.jsonify(
             ["/static/pr/" + priority.file_name]
