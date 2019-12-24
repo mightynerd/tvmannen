@@ -5,6 +5,8 @@ from wtforms.validators import DataRequired, ValidationError, EqualTo
 from data import User
 from datetime import datetime
 
+roles = [('admin', "Admin"), ('pr', "PR")]
+
 class LoginForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
   password = PasswordField('Password', validators=[DataRequired()])
@@ -12,8 +14,6 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-  roles = [('admin', "Admin"), ('pr', "PR")]
-
   username = StringField('Username', validators=[DataRequired()])
   password = PasswordField('Password', validators=[DataRequired()])
   password2 = PasswordField(
@@ -38,3 +38,10 @@ class PRForm(FlaskForm):
                        , validators=[DataRequired()], default=tomorrow)
   priority = BooleanField("Priority")
   submit = SubmitField('Upload PR')
+
+class ModifyUserForm(FlaskForm):
+  password = PasswordField('Password', validators=[DataRequired()])
+  password2 = PasswordField(
+      'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+  role = SelectField("Role", validators=[DataRequired()], choices=roles)
+  submit = SubmitField('Save changes')
