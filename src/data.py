@@ -27,8 +27,23 @@ class PR(db.Model):
     
 
 def add_pr(file_name, desc, priority, start_date, end_date, user_id):
+  # Shift datetimes to the day after at 5:00
+  start = datetime(
+            year=start_date.year, 
+            month=start_date.month, 
+            day=start_date.day + 1, 
+            hour=5
+          )
+
+  end = datetime(
+          year=end_date.year, 
+          month=end_date.month, 
+          day=end_date.day + 1, 
+          hour=5
+        )
+
   pr = PR(desc=desc, file_name=file_name, priority=priority,
-          start_date=start_date, end_date=end_date, user_id=user_id)
+          start_date=start, end_date=end, user_id=user_id)
   db.session.add(pr)
   db.session.commit()
 

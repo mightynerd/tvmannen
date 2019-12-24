@@ -17,7 +17,11 @@
 <h1>PR</h1>
 
 {% for pr in pr_list %}
-  <p> {{ pr.file_name }}, {{ pr.id }}, <a href="/admin/delete?id={{pr.id}}">Delete</a> </p>
+  <p> 
+    ({{ pr.desc}}), {{ pr.file_name }}, id={{ pr.id }}, 
+    priority={{ pr.priority }}, {{ pr.start_date }} - {{ pr.end_date }},
+    <a href="/admin/delete?id={{pr.id}}">Delete</a> 
+  </p>
 {% endfor %}
 
 <h1>Upload PR</h1>
