@@ -27,14 +27,18 @@ class PR(db.Model):
     
 
 def add_pr(file_name, desc, priority, start_date, end_date, user_id):
-  # Shift datetimes to the day after at 5:00
-  start = datetime(
-            year=start_date.year, 
-            month=start_date.month, 
-            day=start_date.day + 1, 
-            hour=5
-          )
+  # If start date is today, start imidiately
+  if start_date == datetime.today():
+    start = datetime.now()
+  else:
+    start = datetime(
+              year=start_date.year, 
+              month=start_date.month, 
+              day=start_date.day, 
+              hour=5
+            )
 
+  # End is the day after at 5:00 in the morning
   end = datetime(
           year=end_date.year, 
           month=end_date.month, 
