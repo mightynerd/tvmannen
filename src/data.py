@@ -28,7 +28,9 @@ class PR(db.Model):
 
 def add_pr(file_name, desc, priority, start_date, end_date, user_id):
   # If start date is today, start imidiately
-  if start_date == datetime.today():
+  print(start_date)
+  print(datetime.today().date)
+  if start_date == datetime.today().date():
     start = datetime.now()
   else:
     start = datetime(

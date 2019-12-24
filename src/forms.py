@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FileField, BooleanField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, ValidationError, EqualTo
-from tv import User
+from data import User
 from datetime import datetime
 
 class LoginForm(FlaskForm):
