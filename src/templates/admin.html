@@ -45,10 +45,10 @@
   {{ form.hidden_tag() }}
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.file.label}}
     </div>
-    <div class="col-sm-3 col-md">
+    <div class="col-sm-12 col-md">
       {{ form.file }}
       {% for error in form.file.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -58,10 +58,10 @@
     
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.desc.label }}
     </div>
-    <div class="col-sm-3 col-md">
+    <div class="col-sm-12 col-md">
       {{ form.desc }}
       {% for error in form.desc.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -70,10 +70,10 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.start_date.label }}
     </div>
-    <div class="col-sm-3 col-md">
+    <div class="col-sm-12 col-md">
     {{ form.start_date }} (First day the PR will be shown)
     {% for error in form.start_date.errors %}
     <span style="color: red;">[{{ error }}]</span>
@@ -82,10 +82,10 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.end_date.label }}
     </div>
-    <div class="col-sm-3 col-md">
+    <div class="col-sm-12 col-md">
       {{ form.end_date}} (Last day the PR will be shown)
       {% for error in form.end_date.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -94,16 +94,16 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.priority.label }} 
     </div>
-    <div class="col-sm-3 col-md">
+    <div class="col-sm-12 col-md">
       {{ form.priority }} (Only this PR will be shown)
     </div>
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-3 col-md-2">
+    <div class="col-sm-12 col-md-2">
       {{ form.submit }}
     </div>
   </div>
