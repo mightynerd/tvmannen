@@ -27,8 +27,8 @@
     <tr>
       <td>{{ user.username }}</a></td>
       <td>{{ user.role }}</td>
-      <td><a href="/admin/users/modify?id={{user.id}}">Modify User</a></td>
-      <td><a href="/admin/users/delete?id={{user.id}}">Delete User</a></td>
+      <td><a href="/admin/users/modify?id={{user.id}}" role="button" style="margin: 0px" class="small">Modify</a></td>
+      <td><a href="/admin/users/delete?id={{user.id}}" role="button" style="margin: 0px" class="secondary small">Delete User</a></td>
     </tr>
     {% endfor %}
   </table>

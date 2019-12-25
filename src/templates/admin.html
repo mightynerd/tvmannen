@@ -28,8 +28,8 @@
     <td><a href="/static/pr/{{pr.file_name}}">{{ pr.desc }}</a></td>
     <td>{{ pr.start_date.strftime('%Y-%m-%d, %H:%M') }}</td>
     <td>{{ pr.end_date.strftime('%Y-%m-%d, %H:%M') }}</td>
-    <td><a href="/admin/modify_pr?id={{pr.id}}">Modify</a></td>
-    <td><a href="/admin/delete?id={{pr.id}}">Delete</a></td>
+    <td><a href="/admin/modify_pr?id={{pr.id}}" role="button" style="margin: 0px" class="small">Modify</a></td>
+    <td><a href="/admin/delete?id={{pr.id}}" role="button" style="margin: 0px" class="secondary small">Delete</a></td>
   </tr>
 {% endfor %}
 </table>
