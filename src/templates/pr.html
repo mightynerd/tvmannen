@@ -36,6 +36,15 @@
     var prs = undefined;
 
     function next_pr() {
+      if (prs.length < 1)
+      {
+        document.getElementById("body").style.backgroundImage = "url(https://dtek.se/static/datalogo.svg)";
+        document.getElementById("body").style.backgroundColor = "#fa6607";
+        return;
+      }
+
+      curr %= prs.length; // If a pr has been deleted since last call
+      document.getElementById("body").style.backgroundColor = "#000000";
       document.getElementById("body").style.backgroundImage = "url(" + prs[curr] + ")";
       curr++;
       curr %= prs.length;
