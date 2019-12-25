@@ -25,14 +25,13 @@
 {% for pr in pr_list %}
   <tr>
     <td><a href="/static/pr/{{pr.file_name}}">{{ pr.desc }}</a></td>
-    <td>{{ pr.start_date.strftime('%Y-%m-%d, %H:%m') }}</td>
-    <td>{{ pr.end_date.strftime('%Y-%m-%d, %H:%m') }}</td>
+    <td>{{ pr.start_date.strftime('%Y-%m-%d, %H:%M') }}</td>
+    <td>{{ pr.end_date.strftime('%Y-%m-%d, %H:%M') }}</td>
     <td><a href="/admin/delete?id={{pr.id}}">Delete</a></td>
   </tr>
 {% endfor %}
 </table>
 </fieldset>
-
 
 <fieldset>
 <legend>Upload PR</legend>
@@ -40,10 +39,10 @@
   {{ form.hidden_tag() }}
 
   <div class="row responsive-label">
-    <div class="col-sm-12 col-md-1">
-      {{ form.file.label }}
+    <div class="col-sm-3 col-md-2">
+      {{ form.file.label}}
     </div>
-    <div class="col-sm-12 col-md">
+    <div class="col-sm-3 col-md">
       {{ form.file }}
       {% for error in form.file.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -53,10 +52,10 @@
     
 
   <div class="row responsive-label">
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-3 col-md-2">
       {{ form.desc.label }}
     </div>
-    <div class="col-sm-12 col-md">
+    <div class="col-sm-3 col-md">
       {{ form.desc }}
       {% for error in form.desc.errors %}
       <span style="color: red;">[{{ error }}]</span>
@@ -65,11 +64,11 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-3 col-md-2">
       {{ form.start_date.label }}
     </div>
-    <div class="col-sm-12 col-md">
-    {{ form.start_date }}
+    <div class="col-sm-3 col-md">
+    {{ form.start_date }} (First day the PR will be shown)
     {% for error in form.start_date.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
@@ -77,11 +76,11 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-3 col-md-2">
       {{ form.end_date.label }}
     </div>
-    <div class="col-sm-12 col-md">
-      {{ form.end_date}}
+    <div class="col-sm-3 col-md">
+      {{ form.end_date}} (Last day the PR will be shown)
       {% for error in form.end_date.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
@@ -89,16 +88,19 @@
   </div>
 
   <div class="row responsive-label">
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-3 col-md-2">
       {{ form.priority.label }} 
     </div>
-    <div class="col-sm-12 col-md"></div>
-      {{ form.priority }}
+    <div class="col-sm-3 col-md">
+      {{ form.priority }} (Only this PR will be shown)
     </div>
   </div>
 
-
-    {{ form.submit }}
+  <div class="row responsive-label">
+    <div class="col-sm-3 col-md-2">
+      {{ form.submit }}
+    </div>
+  </div>
 </form>
 </fieldset>
 

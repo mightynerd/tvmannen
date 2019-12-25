@@ -31,7 +31,8 @@ class PRForm(FlaskForm):
   tomorrow = today.replace(day=today.day + 1)
 
   file = FileField(label="Image file:", validators=[DataRequired()])
-  desc = StringField("Description:", validators=[DataRequired()])
+  desc = StringField("Description:", validators=[DataRequired()]
+                     , render_kw={"placeholder": "Hackkväll 24/12"})
   start_date = DateField("Start date:",
                          validators=[DataRequired()], default=today)
   end_date = DateField("End date:"
