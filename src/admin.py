@@ -5,8 +5,8 @@ import os
 import uuid
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask import Blueprint, flash, redirect, render_template, request
-from data import User, PR, add_pr
-from forms import PRForm
+from data import User, PR, add_pr, fix_date
+from forms import PRForm, ModifyPRForm
 from werkzeug.utils import secure_filename
 
 admin_page = Blueprint("admin", __name__)
@@ -72,3 +72,34 @@ def delete():
     db.session.commit()
     flash("PR successfully deleted")
     return redirect("/admin")
+
+
+@admin_page.route("/admin/modify_pr", methods=['GET', 'POST'])
+@login_required
+def modify():
+  id = request.args.get("id")
+  if id == None:
+      flash("Invalid arguments")
+      return redirect("/admin")
+
+  pr = PR.query.filter_by(id=id).first()
+  if pr == None:
+    flash("Invalid PR id")
+    return redirect("/admin")
+
+  if current_user.role != "admin" and current_user.id != pr.user_id:
+        flash("You don't have permissions to modify this PR")
+        redirect("/admin")
+
+  form = ModifyPRForm()
+  if form.validate_on_submit():
+    start, end = fix_date(form.start_date.data, form.end_date.data)
+    pr.start_date = start
+    pr.end_date = end
+    db.session.commit()
+    flash('The PR has been sucessfully modified')
+    return redirect("/admin")
+  else:
+      form.start_date.data = pr.start_date
+      form.end_date.data = pr.end_date
+  return render_template('modify_pr.html', form=form, pr=pr)

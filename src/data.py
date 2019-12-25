@@ -1,7 +1,7 @@
 from tv import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,29 +25,31 @@ class PR(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     priority = db.Column(db.Integer, default=0)
     
-
-def add_pr(file_name, desc, priority, start_date, end_date, user_id):
+def fix_date(start_date, end_date):
   # If start date is today, start imidiately
-  print(start_date)
-  print(datetime.today().date)
   if start_date == datetime.today().date():
     start = datetime.now()
   else:
     start = datetime(
-              year=start_date.year, 
-              month=start_date.month, 
-              day=start_date.day, 
-              hour=5
-            )
+        year=start_date.year,
+        month=start_date.month,
+        day=start_date.day,
+        hour=5
+    )
 
   # End is the day after at 5:00 in the morning
   end = datetime(
-          year=end_date.year, 
-          month=end_date.month, 
-          day=end_date.day + 1, 
-          hour=5
-        )
+      year=end_date.year,
+      month=end_date.month,
+      day=end_date.day,
+      hour=5
+  ) + timedelta(days = 1)
 
+  return start, end
+
+def add_pr(file_name, desc, priority, start_date, end_date, user_id):
+  # Fix date
+  start, end = fix_date(start_date, end_date)
   pr = PR(desc=desc, file_name=file_name, priority=priority,
           start_date=start, end_date=end, user_id=user_id)
   db.session.add(pr)

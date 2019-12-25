@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FileField, BooleanField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired, ValidationError, EqualTo
+from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
 from data import User
 from datetime import datetime
 
@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-  username = StringField('Username:', validators=[DataRequired()])
+  username = StringField('Username:', validators=[DataRequired(), Length(min=1, max=64)])
   password = PasswordField('Password:', validators=[DataRequired()])
   password2 = PasswordField(
       'Repeat Password:', validators=[DataRequired(), EqualTo('password')])
@@ -31,7 +31,7 @@ class PRForm(FlaskForm):
   tomorrow = today.replace(day=today.day + 1)
 
   file = FileField(label="Image file:", validators=[DataRequired()])
-  desc = StringField("Description:", validators=[DataRequired()]
+  desc = StringField("Description:", validators=[DataRequired(), Length(min=1, max=128)]
                      , render_kw={"placeholder": "Hackkväll 24/12"})
   start_date = DateField("Start date:",
                          validators=[DataRequired()], default=today)
@@ -45,4 +45,10 @@ class ModifyUserForm(FlaskForm):
   password2 = PasswordField(
       'Repeat Password:', validators=[DataRequired(), EqualTo('password')])
   role = SelectField("Role:", validators=[DataRequired()], choices=roles)
+  submit = SubmitField('Save changes')
+
+class ModifyPRForm(FlaskForm):
+  start_date = DateField("Start date:",
+                         validators=[DataRequired()])
+  end_date = DateField("End date:", validators=[DataRequired()])
   submit = SubmitField('Save changes')
