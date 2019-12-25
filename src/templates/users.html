@@ -3,14 +3,15 @@
 {% block content %}
 
 {% with messages = get_flashed_messages() %}
-{% if messages %}
-<h2>Messages</h2>
-<ul>
-  {% for message in messages %}
-  <li>{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
+  {% if messages %}
+  <div class="card large">
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  </div>
+  {% endif %}
 {% endwith %}
 
 <fieldset>

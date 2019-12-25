@@ -8,17 +8,17 @@ from datetime import datetime
 roles = [('admin', "Admin"), ('pr', "PR")]
 
 class LoginForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  password = PasswordField('Password', validators=[DataRequired()])
+  username = StringField('Username:', validators=[DataRequired()])
+  password = PasswordField('Password:', validators=[DataRequired()])
   submit = SubmitField('Sign In')
 
 
 class RegistrationForm(FlaskForm):
-  username = StringField('Username', validators=[DataRequired()])
-  password = PasswordField('Password', validators=[DataRequired()])
+  username = StringField('Username:', validators=[DataRequired()])
+  password = PasswordField('Password:', validators=[DataRequired()])
   password2 = PasswordField(
-      'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-  role = SelectField("Role",validators=[DataRequired()], choices=roles)
+      'Repeat Password:', validators=[DataRequired(), EqualTo('password')])
+  role = SelectField("Role:",validators=[DataRequired()], choices=roles)
   submit = SubmitField('Create user')
 
   def validate_username(self, username):
@@ -41,8 +41,8 @@ class PRForm(FlaskForm):
   submit = SubmitField('Upload PR')
 
 class ModifyUserForm(FlaskForm):
-  password = PasswordField('Password', validators=[DataRequired()])
+  password = PasswordField('Password:', validators=[DataRequired()])
   password2 = PasswordField(
-      'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-  role = SelectField("Role", validators=[DataRequired()], choices=roles)
+      'Repeat Password:', validators=[DataRequired(), EqualTo('password')])
+  role = SelectField("Role:", validators=[DataRequired()], choices=roles)
   submit = SubmitField('Save changes')
