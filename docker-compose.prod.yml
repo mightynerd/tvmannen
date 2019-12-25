@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+    web:
+        command: uwsgi --enable-threads --socket :4001 --module tv:app
+        volumes:
+            - ./src:/src
