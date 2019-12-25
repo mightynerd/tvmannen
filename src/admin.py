@@ -74,7 +74,7 @@ def delete():
     flash("PR successfully deleted")
     return redirect("/admin")
 
-
+# PR modification page. Takes an PR id "id" as an argument.
 @admin_page.route("/admin/modify_pr", methods=['GET', 'POST'])
 @login_required
 def modify():
@@ -97,10 +97,13 @@ def modify():
     start, end = fix_date(form.start_date.data, form.end_date.data)
     pr.start_date = start
     pr.end_date = end
+    pr.priority = form.priority.data
     db.session.commit()
     flash('The PR has been sucessfully modified')
     return redirect("/admin")
   else:
-      form.start_date.data = pr.start_date
-      form.end_date.data = pr.end_date
+    # Change for fields to the PR's current values
+    form.start_date.data = pr.start_date
+    form.end_date.data = pr.end_date
+    form.priority.data = pr.priority
   return render_template('modify_pr.html', form=form, pr=pr)
