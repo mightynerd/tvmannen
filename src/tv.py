@@ -3,6 +3,7 @@ from flask import Flask, render_template, flash, redirect, request, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from datetime import datetime
+import os
 
 from config import Config as config
 
@@ -15,7 +16,14 @@ db.create_all()
 login_manager = LoginManager(app)
 login_manager.login_view = '/login'
 
-from data import PR
+from data import PR, User, create_db
+
+# Init user table if it doesn't exist
+try:
+    User.query.all()
+except:
+    print("Data base does not exist, creating a new one")
+    create_db()
 
 from users import users_page
 app.register_blueprint(users_page)
