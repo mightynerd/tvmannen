@@ -20,6 +20,8 @@
   <th>Description</th>
   <th>Start time</th>
   <th>End time</th>
+  <th>Priority</th>
+  <th>Owner</th>
   <th></th>
   <th></th>
 </tr>
@@ -28,6 +30,8 @@
     <td><a href="/static/pr/{{pr.file_name}}">{{ pr.desc }}</a></td>
     <td>{{ pr.start_date.strftime('%Y-%m-%d, %H:%M') }}</td>
     <td>{{ pr.end_date.strftime('%Y-%m-%d, %H:%M') }}</td>
+    <td>{{ pr.priority }}</td>
+    <td>{{ pr.owner }}</td>
     <td><a href="/admin/modify_pr?id={{pr.id}}" role="button" style="margin: 0px" class="small">Modify</a></td>
     <td><a href="/admin/delete?id={{pr.id}}" role="button" style="margin: 0px" class="secondary small">Delete</a></td>
   </tr>

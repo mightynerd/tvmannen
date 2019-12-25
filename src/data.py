@@ -22,6 +22,7 @@ class PR(db.Model):
     file_name = db.Column(db.String(128))
     start_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     end_date = db.Column(db.DateTime, index=True)
+    owner = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     priority = db.Column(db.Integer, default=0)
     
@@ -47,11 +48,11 @@ def fix_date(start_date, end_date):
 
   return start, end
 
-def add_pr(file_name, desc, priority, start_date, end_date, user_id):
+def add_pr(file_name, desc, priority, start_date, end_date, user_id, owner):
   # Fix date
   start, end = fix_date(start_date, end_date)
   pr = PR(desc=desc, file_name=file_name, priority=priority,
-          start_date=start, end_date=end, user_id=user_id)
+          start_date=start, end_date=end, user_id=user_id, owner=owner)
   db.session.add(pr)
   db.session.commit()
 

@@ -35,7 +35,8 @@ def admin():
                    priority=form.priority.data,
                    start_date=form.start_date.data,
                    end_date=form.end_date.data,
-                   user_id=current_user.id)
+                   user_id=current_user.id,
+                   owner=current_user.username)
             return redirect("/admin")
 
     if current_user.role == "admin":
