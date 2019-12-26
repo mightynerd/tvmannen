@@ -66,7 +66,4 @@ def create_db():
   u = User(id=0, username="admin", role="admin")
   u.set_password("pass")
   db.session.add(u)
-  u = User(id=1, username="pr", role="pr")
-  u.set_password("pass")
-  db.session.add(u)
   db.session.commit()

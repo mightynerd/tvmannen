@@ -23,21 +23,24 @@ def admin():
     form = PRForm()
     if form.validate_on_submit():
         filename = form.file.data.filename
-        if filename and allowed_file(filename):
-            org_filename = secure_filename(filename)
-            # Generate random filename with correct extention
-            filename = str(uuid.uuid4()) + "." + \
-                org_filename.rsplit('.', 1)[1].lower()
-            form.file.data.save(os.path.join(
-                app.config['UPLOAD_FOLDER'], filename))
-            add_pr(file_name=filename,
-                   desc=form.desc.data,
-                   priority=form.priority.data,
-                   start_date=form.start_date.data,
-                   end_date=form.end_date.data,
-                   user_id=current_user.id,
-                   owner=current_user.username)
+        if not filename or not allowed_file(filename):
+            flash("File type not supported")
             return redirect("/admin")
+            
+        org_filename = secure_filename(filename)
+        # Generate random filename with correct extention
+        filename = str(uuid.uuid4()) + "." + \
+            org_filename.rsplit('.', 1)[1].lower()
+        form.file.data.save(os.path.join(
+            app.config['UPLOAD_FOLDER'], filename))
+        add_pr(file_name=filename,
+               desc=form.desc.data,
+               priority=form.priority.data,
+               start_date=form.start_date.data,
+               end_date=form.end_date.data,
+               user_id=current_user.id,
+               owner=current_user.username)
+        return redirect("/admin")
 
     if current_user.role == "admin":
         pr = PR.query.all()
