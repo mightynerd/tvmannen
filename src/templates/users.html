@@ -21,14 +21,15 @@
       <th>Username</th>
       <th>Role</th>
       <th></th>
-      <th></th>
     </tr>
     {% for user in users %}
     <tr>
-      <td>{{ user.username }}</a></td>
-      <td>{{ user.role }}</td>
-      <td><a href="/admin/users/modify?id={{user.id}}" role="button" style="margin: 0px" class="small">Modify</a></td>
-      <td><a href="/admin/users/delete?id={{user.id}}" role="button" style="margin: 0px" class="secondary small">Delete User</a></td>
+      <td data-label="Username:">{{ user.username }}</a></td>
+      <td data-label="Role:">{{ user.role }}</td>
+      <td data-label="">
+        <a href="/admin/users/modify?id={{user.id}}" role="button" style="margin: 0px" class="small">Modify</a>
+        <a href="/admin/users/delete?id={{user.id}}" role="button" style="margin: 0px" class="secondary small">Delete User</a>
+      </td>
     </tr>
     {% endfor %}
   </table>
