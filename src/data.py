@@ -25,7 +25,8 @@ class PR(db.Model):
     owner = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     priority = db.Column(db.Integer, default=0)
-    
+
+  
 def fix_date(start_date, end_date):
   # If start date is today, start imidiately
   if start_date == datetime.today().date():
