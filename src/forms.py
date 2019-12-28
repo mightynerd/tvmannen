@@ -47,6 +47,13 @@ class ModifyUserForm(FlaskForm):
   role = SelectField("Role:", validators=[DataRequired()], choices=roles)
   submit = SubmitField('Save changes')
 
+
+class ChangePasswordForm(FlaskForm):
+  password = PasswordField('Password:', validators=[DataRequired()])
+  password2 = PasswordField(
+      'Repeat Password:', validators=[DataRequired(), EqualTo('password')])
+  submit = SubmitField('Save changes')
+
 class ModifyPRForm(FlaskForm):
   start_date = DateField("Start date:",
                          validators=[DataRequired()])

@@ -1,10 +1,10 @@
 #Blueprint for user login and logout
 
-from tv import login_manager
+from tv import login_manager, db
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask import Blueprint, flash, redirect, render_template, request
 from data import User
-from forms import LoginForm
+from forms import LoginForm, ChangePasswordForm
 
 login_page = Blueprint("login", __name__)
 
@@ -33,3 +33,21 @@ def logout():
     logout_user()
     flash("Logged out")
     return redirect("/login")
+
+# Change password for current user
+@login_page.route("/admin/change_password", methods=['GET', 'POST'])
+@login_required
+def modify():
+  user = User.query.filter_by(id=current_user.id).first()
+  if user == None:
+    flash("Invalid user id")
+    return redirect("/admin")
+
+  form = ChangePasswordForm()
+  if form.validate_on_submit():
+    user.set_password(form.password.data)
+    db.session.commit()
+    flash('Your password has been changed, please log in again')
+    return redirect("/logout")
+
+  return render_template('change_password.html', form=form, user=user)

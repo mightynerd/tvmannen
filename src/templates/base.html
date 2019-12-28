@@ -16,8 +16,12 @@
     
     <footer>
       {% if user %}
-      <p>Logged in as {{user.username}} ({{user.role}}) <a href="/logout">Logout</a></p>
+      <p>Logged in as {{user.username}} ({{user.role}})  |
+        <a href="/admin/change_password">Change password</a> |
+        <a href="/logout">Logout</a>
+      </p>
       {% endif %}
+
       <p>TV-Mannen</p>
     </footer>
   </body>
