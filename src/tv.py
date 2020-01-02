@@ -44,6 +44,7 @@ def pr_cleanup():
     PR.query.filter(PR.end_date < datetime.now()).delete()
     db.session.commit()
 
+# Return a JSON list of PRs to currently be displayed
 @app.route("/pr")
 def pr():
     pr_cleanup()

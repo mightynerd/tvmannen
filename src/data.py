@@ -25,8 +25,14 @@ class PR(db.Model):
     owner = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     priority = db.Column(db.Integer, default=0)
-    
-def fix_date(start_date, end_date):
+
+  
+def fix_date(start_date, end_date, priority):
+
+  # Priority PRs have the same start and end dates
+  if priority > 0:
+    end_date = start_date
+
   # If start date is today, start imidiately
   if start_date == datetime.today().date():
     start = datetime.now()
@@ -50,7 +56,7 @@ def fix_date(start_date, end_date):
 
 def add_pr(file_name, desc, priority, start_date, end_date, user_id, owner):
   # Fix date
-  start, end = fix_date(start_date, end_date)
+  start, end = fix_date(start_date, end_date, priority)
   pr = PR(desc=desc, file_name=file_name, priority=priority,
           start_date=start, end_date=end, user_id=user_id, owner=owner)
   db.session.add(pr)

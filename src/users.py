@@ -18,7 +18,6 @@ def create_user():
 
     # Logged in as admin
     users = User.query.all()
-
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, role=form.role.data)
@@ -52,6 +51,7 @@ def delete_user():
     db.session.commit()
     return redirect("/admin/users")
 
+# User modification page, takes user id "id" as an argument
 @users_page.route("/admin/users/modify", methods=['GET', 'POST'])
 @login_required
 def modify():
