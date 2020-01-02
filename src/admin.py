@@ -16,6 +16,21 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in config.ALLOWED_EXTENSIONS
 
+def check_priority(start, end, priority):
+    start, end = fix_date(start, end, priority)
+
+    ps = PR.query.filter_by(priority=1).all()
+    if ps == None:
+        return True, ""
+    
+    # Check for overlapping prio PRs
+    for p in ps:
+        if (start.date() == p.start_date.date()):
+            return False, "You priority PR overlaps with another priority PR. \
+                           Please contact dHack to resolve this issue."
+
+    return True, ""
+
 # Admin page with PR list, upload and deletion
 @admin_page.route("/admin", methods=['GET', 'POST'])
 @login_required
@@ -26,8 +41,22 @@ def admin():
         if not filename or not allowed_file(filename):
             flash("File type not supported")
             return redirect("/admin")
-            
+
+        # Check if start date is after end date
+        if (form.start_date.data > form.end_date.data):
+            flash("Start date is after end date.")
+            return redirect("/admin")
+
+        if form.priority.data > 0:
+            check, msg = check_priority(form.start_date.data, 
+                                        form.end_date.data  ,
+                                        form.priority.data  )
+            if check == False:
+                flash(msg)
+                return redirect("/admin")
+
         org_filename = secure_filename(filename)
+        
         # Generate random filename with correct extention
         filename = str(uuid.uuid4()) + "." + \
             org_filename.rsplit('.', 1)[1].lower()
