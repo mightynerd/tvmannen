@@ -82,7 +82,7 @@ class ModifyPRForm(FlaskForm):
     validators=[DataRequired()])
 
   end_date = DateField("End date:", 
-    alidators=[DataRequired()])
+    validators=[DataRequired()])
 
   priority = BooleanField("Priority:")
   submit = SubmitField('Save changes')
