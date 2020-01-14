@@ -3,6 +3,7 @@
 from tv import login_manager, db, config, app
 import os
 import uuid
+from datetime import datetime, timedelta
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from flask import Blueprint, flash, redirect, render_template, request
 from data import User, PR, add_pr, fix_date
@@ -36,6 +37,7 @@ def check_priority(start, end, priority):
 @login_required
 def admin():
     form = PRForm()
+
     if form.validate_on_submit():
         filename = form.file.data.filename
         if not filename or not allowed_file(filename):
@@ -70,6 +72,11 @@ def admin():
                user_id=current_user.id,
                owner=current_user.username)
         return redirect("/admin")
+    else:
+        # Change the default start and end dates
+        today = datetime.today()
+        form.start_date.data = today
+        form.end_date.data = today
 
     if current_user.role == "admin":
         pr = PR.query.all()
