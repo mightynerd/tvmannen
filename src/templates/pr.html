@@ -1,5 +1,4 @@
 <!-- Page for displaying PRs -->
-<!-- Could be static -->
 <!DOCTYPE html>
 <html>
 
@@ -107,10 +106,10 @@
     }
 
     // How long a PR is shown
-    setInterval(next_pr, 10000);
+    setInterval(next_pr, {{ pr_time }} * 1000);
 
     // How often the PR list is updated
-    setInterval(get_prs,  60000)
+    setInterval(get_prs,  {{ pr_fetch_time }} * 1000)
 
   </script>
 </head>
