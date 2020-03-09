@@ -133,7 +133,7 @@ def modify():
 
   form = ModifyPRForm()
   if form.validate_on_submit():
-    start, end = fix_date(form.start_date.data, form.end_date.data)
+    start, end = fix_date(form.start_date.data, form.end_date.data, form.priority.data)
     pr.start_date = start
     pr.end_date = end
     pr.priority = form.priority.data
