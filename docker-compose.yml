@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
     web:
@@ -6,3 +6,13 @@ services:
         restart: always
         ports:
             - "4001:4001"
+        environment:
+            - SECRET_KEY
+            - DATABASE_URI=sqlite:////db/data
+        volumes:
+            - db:/db
+            - uploads:/src/static/pr
+
+volumes:
+  db:
+  uploads:
