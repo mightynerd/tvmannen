@@ -12,11 +12,8 @@ A day starts at 5:00 and ends at 5:00 the next day. This means that an end date 
 The default priority is 0. If a PR has its priority set to 1, it will be the only PR shown until its end date (useful for pubs etc.).
 
 ## Running in Docker
-```
-git clone https://github.com/mightynerd/tvmannen
-make build
-make up-prod
-```
-***Important***: Change ```SECRET_KEY``` in ```src/config.py``` to something more secret.
+The provided sample compose file should work out of the box provided a
+`SECRET_KEY` env-variable. Aditional variables can be found in `src/config.py`.
 
-See docker-compose.yml/docker-compose.prod.yml for ports, which you probably want to change. A default admin account will be created on first start (if no existing database is present). Visit ```/login``` and login with "admin" and "pass".
+At first launc the database is populated with a user _admin_ with the password
+_pass_. It is suggested you change this immediately.
