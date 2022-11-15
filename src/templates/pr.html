@@ -35,10 +35,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-    } 
-    
+    }
   </style>
-    
+
   <script>
 
     var curr = 0;
@@ -48,18 +47,16 @@
       body = document.getElementById("body");
 
       // No PR -> show dtek logo
-      if (prs.length < 1)
-      {
+      if (prs.length < 1) {
         body.style.backgroundImage = "url(https://dtek.se/static/datalogo.svg)";
         body.style.backgroundColor = "#fa6607";
         return;
       }
 
       // If a pr has been deleted since last call
-      curr %= prs.length; 
+      curr %= prs.length;
 
-      if (prs[curr].endsWith(".mp4"))
-      {
+      if (prs[curr].endsWith(".mp4")) {
         // Video (only mp4)
         var video = document.createElement('video');
         video.autoplay = true;
@@ -72,36 +69,35 @@
         video.append(source);
 
         body.innerHTML = "";
-        body.style.backgroundColor = "#000000";
+        body.style.backgroundColor = "#fa6607";
         body.style.backgroundImage = "none";
         body.appendChild(video);
       }
-      else
-      {
+      else {
         // Image
         body.innerHTML = "";
-        body.style.backgroundColor = "#000000";
+        body.style.backgroundColor = "#fa6607";
         body.style.backgroundImage = "url(" + prs[curr] + ")";
       }
-      
+
       curr++;
       curr %= prs.length;
     }
 
     // Get list of PRs from /pr
     function get_prs() {
-        var request = new XMLHttpRequest();
-        request.open("GET", "/pr");
-        request.responseType = 'json';
-        request.send();
+      var request = new XMLHttpRequest();
+      request.open("GET", "/pr");
+      request.responseType = 'json';
+      request.send();
 
-        request.onload = function () {
-          var prev_prs = prs;
-          prs = request.response;
+      request.onload = function () {
+        var prev_prs = prs;
+        prs = request.response;
 
-          // Call next_pr on first load
-          if (prev_prs === undefined)
-            next_pr();
+        // Call next_pr on first load
+        if (prev_prs === undefined)
+          next_pr();
       }
     }
 
@@ -109,7 +105,7 @@
     setInterval(next_pr, {{ pr_time }} * 1000);
 
     // How often the PR list is updated
-    setInterval(get_prs,  {{ pr_fetch_time }} * 1000)
+    setInterval(get_prs, {{ pr_fetch_time }} * 1000)
 
   </script>
 </head>
