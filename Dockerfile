@@ -6,6 +6,12 @@ RUN apt-get clean \
     && apt-get -y update
 
 WORKDIR /src
-ADD requirements.txt /src
+COPY requirements.txt /src
 RUN pip install -r requirements.txt
-ADD src /src/
+COPY src /src/
+
+ENV SECRET_KEY verysecretXd
+ENV PORT 4001
+EXPOSE $PORT
+
+CMD uwsgi --enable-threads --http-socket :$PORT --module tv:app

@@ -5,7 +5,6 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Selec
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
 from data import User
-from datetime import datetime
 
 roles = [('admin', "Admin"), ('pr', "PR")]
 
@@ -36,9 +35,6 @@ class RegistrationForm(FlaskForm):
           raise ValidationError('Username already taken')
 
 class PRForm(FlaskForm):
-  today = datetime.today()
-  tomorrow = today.replace(day=today.day + 1)
-
   file = FileField(label="File:", 
     validators=[DataRequired()])
 
@@ -47,10 +43,10 @@ class PRForm(FlaskForm):
     render_kw={"placeholder": "Hackkväll 24/12"})
   
   start_date = DateField("Start date:",
-    validators=[DataRequired()], default=today)
+    validators=[DataRequired()])
   
   end_date = DateField("End date:",
-    validators=[DataRequired()], default=tomorrow)
+    validators=[DataRequired()])
   
   priority = BooleanField("Priority:")
   submit = SubmitField('Upload PR')
@@ -82,7 +78,7 @@ class ModifyPRForm(FlaskForm):
     validators=[DataRequired()])
 
   end_date = DateField("End date:", 
-    alidators=[DataRequired()])
+    validators=[DataRequired()])
 
   priority = BooleanField("Priority:")
   submit = SubmitField('Save changes')

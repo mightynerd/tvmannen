@@ -37,7 +37,7 @@ app.register_blueprint(login_page)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("pr.html")
+    return render_template("pr.html", pr_time = config.PR_TIME, pr_fetch_time = config.PR_FETCH_TIME)
 
 # Delete old PRs
 def pr_cleanup():
